@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: "Open Sans", sans-serif;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #6B6A75;
+            text-align: left;
+            background-color: #FFFFFF;
+        }
+        .container {
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            margin: 100px auto;
+            padding: 20px;
+            text-align: center;
+        }
+        h1{
+            color: #333;
+        }
+        input[type="text"],
+        input[type="password"],
+        input[type="email"]{
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        label {
+            display: block;
+            margin: 10px 0;
+        }
+        input[type="submit"]
+        {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+
+    </style>
+    <script>
+        function validateForm() {
+            const name = document.getElementById("username").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            if (name === "" || email === "" || password === "") {
+                alert("Please fill in all required fields.");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+<h1>Registration</h1>
+<form action=" " method="post" onsubmit="return validateForm();">
+    {% csrf_token %}
+    <input type="text" id="username" name="username" placeholder="enter username" required><br>
+    <input type="email" name="email" placeholder="enter email" required><br>
+    <input type="password" name="password" placeholder="enter password" required><br>
+    <input type="password" name="confirm_password" placeholder="confirm password" required><br>
+    <input type="submit">
+
+</form>
+{% for msg in messages %}
+<h1>{{msg}}</h1>
+{% endfor %}
+</div>
+</body>
+</html>

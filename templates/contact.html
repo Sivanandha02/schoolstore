@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>form</title>
+    <style>
+    body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 500px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            padding: 50px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="number"],
+        input[type="email"],
+        select,
+        textarea {
+            width: 90%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        select {
+            background-color: #f9f9f9;
+        }
+
+        input[type="submit"] {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .gender-container {
+            display: flex;
+            align-items: center;
+        }
+        .gender-container label{
+         margin-right: 10px;
+         margin-left: 15px;
+        }
+        .materials-options{
+            display: flex;
+            align-items: center;
+        }
+        .materials-options label{
+            margin-right: 15px;
+         margin-left: 5px;
+        }
+        .confirmation-message {
+            display: none;
+            text-align: center;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            margin-top: 10px;
+        }
+
+        .return-link {
+            display: none;
+            text-align: center;
+            margin-top: 10px;
+           }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <form method="post" action="{% url 'registrationapp:contact' %}">
+    {% csrf_token %}
+    <h2>Fill The Form</h2>
+<label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <br>
+
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" name="dob" required>
+        <br>
+
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required>
+        <br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <br>
+    <br>
+        <div class="gender-container">
+        <label>Gender:</label>
+        <label for="male">Male</label>
+        <input type="radio" id="male" name="gender" value="male" required>
+        <label for="female">Female</label>
+        <input type="radio" id="female" name="gender" value="female" required>
+        <label for="other">Other</label>
+        <input type="radio" id="other" name="gender" value="other" required>
+        <br>
+        </div>
+    <br>
+        <label for="message">Message:</label>
+            <textarea id="message" name="message" rows="4" required></textarea>
+
+    <br>
+    <label for="department">Select Department:</label>
+        <select id="department" onchange="updateCourses()">
+            <option value="">Select a department</option>
+            <option value="cs">Computer Science (CS)</option>
+            <option value="commerce">Commerce</option>
+            <option value="biology">Biology</option>
+            <option value="physics">Physics</option>
+            <option value="chemistry">Chemistry</option>
+        </select>
+        <br>
+
+        <label for="course">Select Course:</label>
+        <select id="course">
+            <option value="">Select a course</option>
+        </select>
+    <label for="purpose">Purpose:</label>
+            <select id="purpose" name="purpose" required>
+                <option value="">Select a purpose</option>
+                <option value="enquiry">For Enquiry</option>
+                <option value="order">Place Order</option>
+                <option value="return">Return</option>
+            </select>
+
+     <label for="materials">Materials Provide:</label>
+            <div class="materials-options">
+                <input type="checkbox" id="debitNoteBook" name="materials" value="debitNoteBook">
+                <label for="debitNoteBook">Debit Note Book</label>
+                <input type="checkbox" id="pen" name="materials" value="pen">
+                <label for="pen">Pen</label>
+                <input type="checkbox" id="examPapers" name="materials" value="examPapers">
+                <label for="examPapers">Exam Papers</label>
+            </div>
+    <br>
+    <button type="submit">Submit</button>
+
+
+        <div class="return-link" id="returnLink">
+            <a href="{% url 'registrationapp:contact' %}">Return to Homepage</a>
+        </div>
+        </form>
+    {% if confirmation_message %}
+    <div class="confirmation-message">{{ confirmation_message }}</div>
+    {% endif %}
+</div>
+
+<script>
+   function updateCourses() {
+            var departmentSelect = document.getElementById("department");
+            var courseSelect = document.getElementById("course");
+
+            // Clear existing course options
+            courseSelect.innerHTML = '<option value="">Select a course</option>';
+
+            // Define the courses based on the selected department
+            var selectedDepartment = departmentSelect.value;
+            var courses = [];
+
+            if (selectedDepartment === "cs") {
+                courses = ["Web Development", "Software Engineering", "Database Management"];
+            } else if (selectedDepartment === "commerce") {
+                courses = ["Accounting", "Marketing", "Finance"];
+            } else if (selectedDepartment === "biology") {
+                courses = ["Cell Biology", "Genetics", "Ecology"];
+            } else if (selectedDepartment === "physics") {
+                courses = ["Classical Mechanics", "Electromagnetism", "Quantum Mechanics"];
+            } else if (selectedDepartment === "chemistry") {
+                courses = ["Inorganic Chemistry", "Organic Chemistry", "Physical Chemistry"];
+            }
+
+            // Populate the course dropdown with the appropriate options
+            courses.forEach(function(course) {
+                var option = document.createElement("option");
+                option.value = course;
+                option.textContent = course;
+                courseSelect.appendChild(option);
+            });
+        }
+    </script>
+
+</body>
+</html>

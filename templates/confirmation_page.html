@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Confirmation Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .confirmation-message {
+            font-size: 20px;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+        .return-link {
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="confirmation-message">Order Confirmed!</div>
+        <a class="return-link" href="{% url 'myprojectapp:demo' %}">Return to home</a>
+    </div>
+</body>
+</html>
